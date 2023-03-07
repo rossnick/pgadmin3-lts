@@ -1,6 +1,6 @@
 name: MSBuild
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -90,7 +90,7 @@ jobs:
       run: |
         md libssh2-build && cd libssh2-build
         cmake -DCRYPTO_BACKEND=WinCNG -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=%LIBSSH2DIR% -DCMAKE_BUILD_TYPE=Release -A Win32 ..\libssh2-libssh2-1.10.0
-        cmake --build . --target install
+        cmake --build . --target install --config Release
 
     - name: Build hhp2cached
       if: ${{ matrix.build_conf == 'Release' }}
@@ -106,3 +106,27 @@ jobs:
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{matrix.build_conf}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: pgAdmin3
+        path: |
+          ${{env.GITHUB_WORKSPACE}}/pgadmin/Release/pgAdmin3.exe
+          ${{env.LIBSSH2DIR}}/bin/libssh2.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxbase30u_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxbase30u_net_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxbase30u_xml_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_adv_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_aui_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_core_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_html_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_stc_vc142.dll
+          ${{env.WXWIN}}/lib/vc142_dll/wxmsw30u_xrc_vc142.dll
+          ${{env.PGDIR}}/bin/libcrypto-1_1.dll
+          ${{env.PGDIR}}/bin/libssl-1_1.dll
+          ${{env.PGDIR}}/bin/libiconv-2.dll
+          ${{env.PGDIR}}/bin/libintl-8.dll
+          ${{env.PGDIR}}/bin/libpq.dll
+          ${{env.PGDIR}}/bin/libxml2.dll
+          ${{env.PGDIR}}/bin/libxslt.dll
