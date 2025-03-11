@@ -1,5 +1,11 @@
 ** Fork info **
 
+Just a fork to make my own build
+
+--
+rossnick
+
+
 Apparently, I have become the curator of this code by virtue of having
 preserved the last remaining fork of the BigSQL fork of pgadmin3-lts.
 Although a limited amount of maintenance work has occurred, there is no
