@@ -50,6 +50,18 @@ jobs:
         Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxWidgets-3.3.1.7z" -OutFile wxWidgets-source.7z
         7z.exe x -aoa wxWidgets-source.7z -o${{env.WXWIN}}
 
+    - name: Normalize WXWIN path
+      shell: pwsh
+      run: |
+        $root = "${{env.WXWIN}}"
+        $dirs = Get-ChildItem -Directory $root
+        if ($dirs.Count -eq 1) {
+          echo "WXWIN=$($dirs[0].FullName)" >> $env:GITHUB_ENV
+        } else {
+          echo "WXWIN=$root" >> $env:GITHUB_ENV
+        }
+        Write-Host "Resolved WXWIN to: $env:WXWIN"
+
     # Developer files (prebuilt x86) are not provided for wxWidgets >= 3.3. Build from source instead
 
     # Prebuilt ReleaseDLL (x86) is not provided for wxWidgets >= 3.3. Build from source instead
@@ -81,14 +93,28 @@ jobs:
       run: |
         nmake -f makefile.vc BUILD=release SHARED=1 COMPILER_VERSION=142
 
+    - name: Verify wx setup.h (Release)
+      if: ${{ matrix.build_conf == 'Release' }}
+      working-directory: ${{env.WXWIN}}
+      shell: cmd
+      run: |
+        if not exist lib\vc142_dll\mswu\wx\setup.h (
+          echo Expected setup.h missing under lib\vc142_dll\mswu\wx
+          dir lib
+          exit /b 1
+        )
+
     - name: Build hhp2cached (Release)
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.WXWIN}}\utils\hhp2cached
       shell: cmd
       run: |
-        echo SHARED = 1 >> ..\..\build\msw\config.vc
-        echo BUILD = release>> ..\..\build\msw\config.vc
-        nmake -f makefile.vc COMPILER_VERSION=142
+        if not exist ..\..\lib\vc142_dll\mswu\wx\setup.h (
+          echo setup.h not found under ..\..\lib\vc142_dll\mswu\wx
+          dir ..\..\lib\vc142_dll\mswu
+          exit /b 1
+        )
+        nmake -f makefile.vc BUILD=release SHARED=1 COMPILER_VERSION=142
 
     - name: Build wxWidgets (Debug, Win32)
       if: ${{ matrix.build_conf == 'Debug' }}
@@ -96,6 +122,17 @@ jobs:
       shell: cmd
       run: |
         nmake -f makefile.vc BUILD=debug SHARED=1 COMPILER_VERSION=142
+
+    - name: Verify wx setup.h (Debug)
+      if: ${{ matrix.build_conf == 'Debug' }}
+      working-directory: ${{env.WXWIN}}
+      shell: cmd
+      run: |
+        if not exist lib\vc142_dll\mswud\wx\setup.h (
+          echo Expected setup.h missing under lib\vc142_dll\mswud\wx
+          dir lib
+          exit /b 1
+        )
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
