@@ -93,6 +93,16 @@ jobs:
       run: |
         nmake -f makefile.vc BUILD=release SHARED=1 COMPILER_VERSION=142
 
+    - name: Copy wxWidgets DLLs for installer
+      if: ${{ matrix.build_conf == 'Release' }}
+      working-directory: ${{env.WXWIN}}
+      shell: cmd
+      run: |
+        if not exist lib\vc142_dll mkdir lib\vc142_dll
+        copy lib\vc142_dll\mswu\*.dll lib\vc142_dll\
+        echo Copied wxWidgets DLLs to lib\vc142_dll\
+        dir lib\vc142_dll
+
     - name: Verify wx setup.h (Release)
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.WXWIN}}
@@ -123,6 +133,16 @@ jobs:
       run: |
         nmake -f makefile.vc BUILD=debug SHARED=1 COMPILER_VERSION=142
 
+    - name: Copy wxWidgets DLLs for installer (Debug)
+      if: ${{ matrix.build_conf == 'Debug' }}
+      working-directory: ${{env.WXWIN}}
+      shell: cmd
+      run: |
+        if not exist lib\vc142_dll mkdir lib\vc142_dll
+        copy lib\vc142_dll\mswud\*.dll lib\vc142_dll\
+        echo Copied wxWidgets Debug DLLs to lib\vc142_dll\
+        dir lib\vc142_dll
+
     - name: Verify wx setup.h (Debug)
       if: ${{ matrix.build_conf == 'Debug' }}
       working-directory: ${{env.WXWIN}}
@@ -138,4 +158,9 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
+      run: |
+        if "${{matrix.build_conf}}" == "Release" (
+          msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
+        ) else (
+          msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 pgadmin\pgAdmin3.vcxproj
+        )
