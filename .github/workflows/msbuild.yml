@@ -158,6 +158,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      shell: cmd
       run: |
         if "${{matrix.build_conf}}" == "Release" (
           msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
