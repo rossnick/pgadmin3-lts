@@ -33,6 +33,7 @@
       <Message>Calling installer build script...</Message>
       <Command>make.bat 1.23 $(PlatformToolsetVersion) "$(VCToolsRedistInstallDir)"</Command>
       <Outputs>.\pgadmin3.msi;%(Outputs)</Outputs>
+      <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
     </CustomBuildStep>
     <Link>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
