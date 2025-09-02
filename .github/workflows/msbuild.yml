@@ -41,36 +41,18 @@ jobs:
         Invoke-WebRequest -Uri "https://github.com/libssh2/libssh2/archive/refs/tags/libssh2-1.10.0.zip" -OutFile libssh2.zip
         7z.exe x libssh2.zip -o${{env.LIBSSH2DIR}}\..
 
-    - name: Download and unpack wxWidgets headers
-      if: ${{ matrix.build_conf != 'Release' }}
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxWidgets-3.3.1-headers.7z" -OutFile wxWidgets-headers.7z
-        7z.exe x -aoa wxWidgets-headers.7z -o${{env.WXWIN}}
+    # wxWidgets headers are included in the source archive; no separate headers package needed
 
     - name: Download and unpack wxWidgets source
-      if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.GITHUB_WORKSPACE}}
       shell: pwsh
       run: |
         Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxWidgets-3.3.1.7z" -OutFile wxWidgets-source.7z
         7z.exe x -aoa wxWidgets-source.7z -o${{env.WXWIN}}
 
-    - name: Download and unpack wxWidgets developer files
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxMSW-3.3.1_vc14x_x64_Dev.7z" -OutFile wxWidgets-devel.7z
-        7z.exe x -aoa wxWidgets-devel.7z -o${{env.WXWIN}}
+    # Developer files (prebuilt x86) are not provided for wxWidgets >= 3.3. Build from source instead
 
-    - name: Download and unpack wxWidgets release libraries
-      if: ${{ matrix.build_conf == 'Release' }}
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxMSW-3.3.1_vc14x_x64_ReleaseDLL.7z" -OutFile wxWidgets-libraries.7z
-        7z.exe x -aoa wxWidgets-libraries.7z -o${{env.WXWIN}}
+    # Prebuilt ReleaseDLL (x86) is not provided for wxWidgets >= 3.3. Build from source instead
 
     - name: Download and unpack PostgreSQL
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -80,7 +62,6 @@ jobs:
         7z.exe x postgres-binaries.zip -o${{env.PGDIR}}\..
 
     - name: Set up Visual Studio shell
-      if: ${{ matrix.build_conf == 'Release' }}
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x86
@@ -93,7 +74,14 @@ jobs:
         cmake -DCRYPTO_BACKEND=WinCNG -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=%LIBSSH2DIR% -DCMAKE_BUILD_TYPE=Release -A Win32 ..\libssh2-libssh2-1.10.0
         cmake --build . --target install
 
-    - name: Build hhp2cached
+    - name: Build wxWidgets (Release, Win32)
+      if: ${{ matrix.build_conf == 'Release' }}
+      working-directory: ${{env.WXWIN}}\build\msw
+      shell: cmd
+      run: |
+        nmake -f makefile.vc BUILD=release SHARED=1 COMPILER_VERSION=142
+
+    - name: Build hhp2cached (Release)
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.WXWIN}}\utils\hhp2cached
       shell: cmd
@@ -102,8 +90,15 @@ jobs:
         echo BUILD = release>> ..\..\build\msw\config.vc
         nmake -f makefile.vc COMPILER_VERSION=142
 
+    - name: Build wxWidgets (Debug, Win32)
+      if: ${{ matrix.build_conf == 'Debug' }}
+      working-directory: ${{env.WXWIN}}\build\msw
+      shell: cmd
+      run: |
+        nmake -f makefile.vc BUILD=debug SHARED=1 COMPILER_VERSION=142
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{matrix.build_conf}} ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
