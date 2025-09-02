@@ -93,31 +93,7 @@ jobs:
       run: |
         nmake -f makefile.vc BUILD=release SHARED=1 COMPILER_VERSION=142
 
-    - name: List wxWidgets directory structure
-      if: ${{ matrix.build_conf == 'Release' }}
-      working-directory: ${{env.WXWIN}}
-      shell: cmd
-      run: |
-        echo Listing lib directory structure:
-        dir lib /s
-        echo.
-        echo Looking for DLLs in vc142_dll:
-        if exist lib\vc142_dll dir lib\vc142_dll /s
 
-    - name: Copy wxWidgets DLLs for installer
-      if: ${{ matrix.build_conf == 'Release' }}
-      working-directory: ${{env.WXWIN}}
-      shell: cmd
-      run: |
-        if not exist lib\vc142_dll mkdir lib\vc142_dll
-        if exist lib\vc142_dll\mswu\*.dll (
-          copy lib\vc142_dll\mswu\*.dll lib\vc142_dll\
-          echo Copied wxWidgets DLLs from mswu to lib\vc142_dll\
-        ) else (
-          echo No DLLs found in lib\vc142_dll\mswu\
-        )
-        echo Final lib\vc142_dll contents:
-        dir lib\vc142_dll
 
     - name: Verify wx setup.h (Release)
       if: ${{ matrix.build_conf == 'Release' }}
@@ -149,31 +125,7 @@ jobs:
       run: |
         nmake -f makefile.vc BUILD=debug SHARED=1 COMPILER_VERSION=142
 
-    - name: List wxWidgets directory structure (Debug)
-      if: ${{ matrix.build_conf == 'Debug' }}
-      working-directory: ${{env.WXWIN}}
-      shell: cmd
-      run: |
-        echo Listing lib directory structure:
-        dir lib /s
-        echo.
-        echo Looking for DLLs in vc142_dll:
-        if exist lib\vc142_dll dir lib\vc142_dll /s
 
-    - name: Copy wxWidgets DLLs for installer (Debug)
-      if: ${{ matrix.build_conf == 'Debug' }}
-      working-directory: ${{env.WXWIN}}
-      shell: cmd
-      run: |
-        if not exist lib\vc142_dll mkdir lib\vc142_dll
-        if exist lib\vc142_dll\mswud\*.dll (
-          copy lib\vc142_dll\mswud\*.dll lib\vc142_dll\
-          echo Copied wxWidgets Debug DLLs from mswud to lib\vc142_dll\
-        ) else (
-          echo No DLLs found in lib\vc142_dll\mswud\
-        )
-        echo Final lib\vc142_dll contents:
-        dir lib\vc142_dll
 
     - name: Verify wx setup.h (Debug)
       if: ${{ matrix.build_conf == 'Debug' }}
