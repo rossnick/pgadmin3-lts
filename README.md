@@ -72,3 +72,5 @@ $ ./configure --prefix=/opt/pgadmin3bigsql --with-wx-version=3.0  CFLAGS=-fPIC C
 $ make -j8
 $ sudo make install
 ```
+
+test commit
