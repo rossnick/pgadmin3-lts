@@ -146,23 +146,51 @@ jobs:
       run: |
         msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
 
+    - name: Check wxWidgets DLLs
+      shell: cmd
+      run: |
+        echo Checking what DLLs exist in wxWidgets build:
+        dir "wxWidgets\lib\vc142_dll\*.dll"
+        echo Checking Debug vs Release DLLs:
+        if "${{matrix.build_conf}}" == "Debug" (
+          dir "wxWidgets\lib\vc142_dll\*d*.dll"
+        ) else (
+          dir "wxWidgets\lib\vc142_dll\*[!d].dll"
+        )
+
     - name: Copy wxWidgets DLLs
       shell: cmd
       run: |
         echo Copying wxWidgets DLLs to match expected names:
-        copy "wxWidgets\lib\vc142_dll\wxbase30u_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxbase30u_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_core_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_core_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_adv_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_adv_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_html_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_html_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_aui_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_aui_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_gl_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_gl_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_media_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_media_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_propgrid_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_propgrid_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_ribbon_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_ribbon_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_richtext_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_richtext_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_stc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_stc_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_webview_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_webview_vc142.dll"
-        copy "wxWidgets\lib\vc142_dll\wxmsw30u_xrc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_xrc_vc142.dll"
+        if "${{matrix.build_conf}}" == "Debug" (
+          copy "wxWidgets\lib\vc142_dll\wxbase30ud_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxbase30u_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_core_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_core_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_adv_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_adv_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_html_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_html_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_aui_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_aui_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_gl_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_gl_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_media_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_media_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_propgrid_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_propgrid_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_ribbon_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_ribbon_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_richtext_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_richtext_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_stc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_stc_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_webview_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_webview_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30ud_xrc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_xrc_vc_custom.dll"
+        ) else (
+          copy "wxWidgets\lib\vc142_dll\wxbase30u_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxbase30u_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_core_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_core_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_adv_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_adv_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_html_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_html_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_aui_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_aui_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_gl_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_gl_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_media_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_media_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_propgrid_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_propgrid_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_ribbon_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_ribbon_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_richtext_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_richtext_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_stc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_stc_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_webview_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_webview_vc_custom.dll"
+          copy "wxWidgets\lib\vc142_dll\wxmsw30u_xrc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_xrc_vc_custom.dll"
+        )
         echo DLLs copied successfully
 
     - name: Find Installer Location
