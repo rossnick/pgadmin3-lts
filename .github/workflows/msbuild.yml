@@ -102,11 +102,16 @@ jobs:
         echo BUILD = release>> ..\..\build\msw\config.vc
         nmake -f makefile.vc COMPILER_VERSION=142
 
-    - name: Build
+    - name: Build Main Application
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{matrix.build_conf}} ${{env.SOLUTION_FILE_PATH}}
+      # Build the main application first
+      run: msbuild /p:Configuration=${{matrix.build_conf}} pgadmin/pgAdmin3.vcxproj
+
+    - name: Build Installer
+      if: ${{ matrix.build_conf == 'Release' }}
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Build the installer after the main application is ready
+      run: msbuild /p:Configuration=${{matrix.build_conf}} pkg/win32/Installer.vcxproj
 
     - name: Upload pgAdmin3.exe
       if: ${{ matrix.build_conf == 'Release' }}
