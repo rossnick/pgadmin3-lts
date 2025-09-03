@@ -11,7 +11,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <png2c>
-      <CommandLineTemplate> "$(SolutionDir)xtra\png2c\$(Configuration)\png2c.exe" [AllOptions] [AdditionalOptions] "%(FullPath)" "%(FullPath)c" </CommandLineTemplate>
+      <CommandLineTemplate> "$(ProjectDir)..\xtra\png2c\$(Configuration)\png2c.exe" [AllOptions] [AdditionalOptions] "%(FullPath)" "%(FullPath)c" </CommandLineTemplate>
       <Outputs>%(FullPath)c</Outputs>
       <ExecutionDescription>Compiling PNG (%(FullPath))...</ExecutionDescription>
     </png2c>
