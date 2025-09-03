@@ -102,9 +102,14 @@ jobs:
         echo BUILD = release>> ..\..\build\msw\config.vc
         nmake -f makefile.vc COMPILER_VERSION=142
 
+    - name: Build png2c Tool
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Build the png2c tool first as it's needed by the main application
+      run: msbuild /p:Configuration=${{matrix.build_conf}} xtra/png2c/png2c.vcxproj
+
     - name: Build Main Application
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Build the main application first
+      # Build the main application after png2c is ready
       run: msbuild /p:Configuration=${{matrix.build_conf}} pgadmin/pgAdmin3.vcxproj
 
     - name: Build Installer
