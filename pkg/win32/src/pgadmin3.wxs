@@ -357,7 +357,6 @@
 
             <Feature Id="pgadmin3" Title="$(var.APPNAME)" Description="The $(var.APPNAME) management and administration console." Display="expand" Level="1">
                 <ComponentRef Id="core_libs" />
-                <MergeRef Id="CRT" />
                 <ComponentRef Id="pgadmin_exes" />
                 <ComponentRef Id="inis" />
                 <ComponentRef Id="plugins.d" />
