@@ -169,7 +169,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(OPENSSL)/include;$(WXWIN)/lib/vc$(PlatformToolsetVersion)_dll/mswu/;$(WXWIN)/include;$(WXWIN)/contrib/include;$(PGDIR)/include;$(PROJECTDIR)/include;$(PGDIR)/include/server;$(LIBSSH2DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_WINSOCK_DEPRECATED_NO_WARNINGS;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -224,7 +224,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(OPENSSL)/include;$(WXWIN)/lib/vc$(PlatformToolsetVersion)_dll/mswu/;$(WXWIN)/include;$(WXWIN)/contrib/include;$(PGDIR)/include;$(PROJECTDIR)/include;$(PGDIR)/include/server;$(LIBSSH2DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_WINSOCK_DEPRECATED_NO_WARNINGS;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -282,7 +282,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(OPENSSL)/include;$(WXWIN)/lib/vc$(PlatformToolsetVersion)_dll/mswud/;$(WXWIN)/include;$(WXWIN)/contrib/include;$(PGDIR)/include;$(PROJECTDIR)/include;$(PGDIR)/include/server;$(LIBSSH2DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;WIN32;_DEBUG;_WINDOWS;__WINDOWS__;__WXMSW__;WXUSINGDLL;DEBUG=1;__WXDEBUG__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;wxUSE_UNICODE=1;UNICODE;PG_SSL;HAVE_CONNINFO_PARSE;LIBSSH2_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_WINSOCK_DEPRECATED_NO_WARNINGS;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;WIN32;_DEBUG;_WINDOWS;__WINDOWS__;__WXMSW__;WXUSINGDLL;DEBUG=1;__WXDEBUG__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;wxUSE_UNICODE=1;UNICODE;PG_SSL;HAVE_CONNINFO_PARSE;LIBSSH2_OPENSSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pgadmin3.h</PrecompiledHeaderFile>
@@ -519,7 +519,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(WXWIN)/lib/vc$(PlatformToolsetVersion)_dll/mswu/;$(WXWIN)/include;$(OPENSSL)/include;$(WXWIN)/contrib/include;$(PGDIR)/include;$(PROJECTDIR)/include;$(PGDIR)/include/server;$(LIBSSH2DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_WINSOCK_DEPRECATED_NO_WARNINGS;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -574,7 +574,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(OPENSSL)/include;$(WXWIN)/lib/vc$(PlatformToolsetVersion)_dll/mswu/;$(WXWIN)/include;$(WXWIN)/contrib/include;$(PGDIR)/include;$(PROJECTDIR)/include;$(PGDIR)/include/server;$(LIBSSH2DIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE=1;_WINSOCK_DEPRECATED_NO_WARNINGS;HAVE_OPENSSL_CRYPTO;LIBSSH2_OPENSSL;NDEBUG;WIN32;_WINDOWS;__WINDOWS__;__WIN95__;__WIN32__;WINVER=0x0400;STRICT;__WXMSW__;WXUSINGDLL;wxUSE_UNICODE=1;UNICODE;EMBED_XRC;PG_SSL;HAVE_CONNINFO_PARSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
