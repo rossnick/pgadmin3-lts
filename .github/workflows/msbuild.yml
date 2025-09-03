@@ -138,26 +138,10 @@ jobs:
           exit /b 1
         )
 
-    - name: Check png2c tool
-      if: ${{ matrix.build_conf == 'Debug' }}
-      shell: cmd
-      run: |
-        echo Checking for png2c.exe:
-        if exist xtra\png2c\Debug\png2c.exe (
-          echo Found png2c.exe in xtra\png2c\Debug\
-        ) else (
-          echo png2c.exe not found in xtra\png2c\Debug\
-          dir xtra\png2c\Debug\
-        )
-
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       shell: cmd
       run: |
-        if "${{matrix.build_conf}}" == "Release" (
-          msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
-        ) else (
-          msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 pgadmin\pgAdmin3.vcxproj
-        )
+        msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
