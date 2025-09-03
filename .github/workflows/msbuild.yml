@@ -107,10 +107,16 @@ jobs:
       # Build the main application and its dependencies (including png2c) together
       run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 /v:minimal pgadmin/pgAdmin3.vcxproj
 
+    - name: Build Documentation
+      if: ${{ matrix.build_conf == 'Release' }}
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Build the documentation first as it's needed by the installer
+      run: msbuild /p:Configuration=All /p:Platform=Win32 docs/Docs.vcxproj
+
     - name: Build Installer
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Build the installer after the main application is ready
+      # Build the installer after the main application and docs are ready
       run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 pkg/win32/Installer.vcxproj
 
     - name: Upload pgAdmin3.exe
