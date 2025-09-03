@@ -17,7 +17,7 @@ jobs:
         build_conf: [Release, Debug]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -110,7 +110,7 @@ jobs:
 
     - name: Upload pgAdmin3.exe
       if: ${{ matrix.build_conf == 'Release' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: pgAdmin3-${{matrix.build_conf}}
         path: |
@@ -119,7 +119,7 @@ jobs:
 
     - name: Upload Installer
       if: ${{ matrix.build_conf == 'Release' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: pgAdmin3-Installer-${{matrix.build_conf}}
         path: pkg/win32/pgadmin3.msi
