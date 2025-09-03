@@ -146,11 +146,39 @@ jobs:
       run: |
         msbuild /m /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
 
+    - name: Copy wxWidgets DLLs
+      shell: cmd
+      run: |
+        echo Copying wxWidgets DLLs to match expected names:
+        copy "wxWidgets\lib\vc142_dll\wxbase30u_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxbase30u_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_core_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_core_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_adv_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_adv_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_html_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_html_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_aui_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_aui_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_gl_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_gl_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_media_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_media_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_propgrid_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_propgrid_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_ribbon_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_ribbon_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_richtext_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_richtext_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_stc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_stc_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_webview_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_webview_vc142.dll"
+        copy "wxWidgets\lib\vc142_dll\wxmsw30u_xrc_vc_custom.dll" "pgadmin\${{matrix.build_conf}}\wxmsw30u_xrc_vc142.dll"
+        echo DLLs copied successfully
+
+    - name: Find Installer Location
+      shell: cmd
+      run: |
+        echo Looking for installer files:
+        dir /s /b *.msi
+        echo Looking in pkg\win32 directory:
+        dir /s /b pkg\win32\*.msi
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: pgAdmin3-${{matrix.build_conf}}-Win32
         path: |
           pgadmin/${{matrix.build_conf}}/pgAdmin3.exe
-          pkg/win32/${{matrix.build_conf}}/pgAdmin3-*.msi
+          pgadmin/${{matrix.build_conf}}/wx*.dll
+          pkg/win32/*.msi
         retention-days: 30
