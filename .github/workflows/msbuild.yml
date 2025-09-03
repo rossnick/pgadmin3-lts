@@ -138,16 +138,6 @@ jobs:
           exit /b 1
         )
 
-    - name: Check Visual Studio merge modules
-      if: ${{ matrix.build_conf == 'Release' }}
-      shell: cmd
-      run: |
-        echo Checking for merge modules in Visual Studio installation:
-        dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.29.30133\MergeModules\" /b
-        echo.
-        echo Looking for VC142 CRT merge modules:
-        dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.29.30133\MergeModules\*VC142*" /b
-
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
