@@ -107,3 +107,19 @@ jobs:
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{matrix.build_conf}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Upload pgAdmin3.exe
+      if: ${{ matrix.build_conf == 'Release' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pgAdmin3-${{matrix.build_conf}}
+        path: |
+          pgadmin/Release/pgAdmin3.exe
+          pgadmin/Release/*.dll
+
+    - name: Upload Installer
+      if: ${{ matrix.build_conf == 'Release' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: pgAdmin3-Installer-${{matrix.build_conf}}
+        path: pkg/win32/pgadmin3.msi
