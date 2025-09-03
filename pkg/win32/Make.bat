@@ -52,7 +52,7 @@ GOTO EXIT
 if (%3)==() GOTO ERR_USAGE
 
 REM Set configuration (default to Release if not provided)
-if (%4)==() (
+if "%4"=="" (
     SET CONFIGURATION=Release
 ) else (
     SET CONFIGURATION=%4
