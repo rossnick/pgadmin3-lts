@@ -105,18 +105,18 @@ jobs:
     - name: Build png2c Tool
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Build the png2c tool first as it's needed by the main application
-      run: msbuild /p:Configuration=${{matrix.build_conf}} xtra/png2c/png2c.vcxproj
+      run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 xtra/png2c/png2c.vcxproj
 
     - name: Build Main Application
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Build the main application after png2c is ready
-      run: msbuild /p:Configuration=${{matrix.build_conf}} pgadmin/pgAdmin3.vcxproj
+      run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 pgadmin/pgAdmin3.vcxproj
 
     - name: Build Installer
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Build the installer after the main application is ready
-      run: msbuild /p:Configuration=${{matrix.build_conf}} pkg/win32/Installer.vcxproj
+      run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 pkg/win32/Installer.vcxproj
 
     - name: Upload pgAdmin3.exe
       if: ${{ matrix.build_conf == 'Release' }}
