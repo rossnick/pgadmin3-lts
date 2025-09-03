@@ -31,7 +31,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='All|Win32'">
     <CustomBuildStep>
       <Message>Calling installer build script...</Message>
-      <Command>build_installer.bat 1.23 $(PlatformToolsetVersion) "$(VCToolsRedistInstallDir)"</Command>
+      <Command>build_installer.bat 1.23 $(PlatformToolsetVersion) "$(VCToolsRedistInstallDir)" "$(Configuration)"</Command>
       <Outputs>.\pgadmin3.msi;%(Outputs)</Outputs>
       <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
     </CustomBuildStep>

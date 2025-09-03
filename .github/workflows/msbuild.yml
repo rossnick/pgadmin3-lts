@@ -153,10 +153,10 @@ jobs:
         dir "wxWidgets\lib\vc142_dll\*.dll"
         echo Checking Debug vs Release DLLs:
         if "${{matrix.build_conf}}" == "Debug" (
-          echo Looking for Debug DLLs (with 'd' in name):
+          echo Looking for Debug DLLs with 'd' in name:
           dir "wxWidgets\lib\vc142_dll\*d*.dll"
         ) else (
-          echo Looking for Release DLLs (without 'd' in name):
+          echo Looking for Release DLLs without 'd' in name:
           dir "wxWidgets\lib\vc142_dll\wxbase30u_vc_custom.dll"
           dir "wxWidgets\lib\vc142_dll\wxmsw30u_*_vc_custom.dll"
         )
