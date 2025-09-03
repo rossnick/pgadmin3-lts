@@ -59,10 +59,6 @@
     <None Include="upgrade.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\docs\Docs.vcxproj">
-      <Project>{cfad4001-cc90-415e-87ac-1a85446bfa54}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\..\pgadmin\pgAdmin3.vcxproj">
       <Project>{5c2d73ba-1f24-48f8-8233-85f5d672aa6a}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
