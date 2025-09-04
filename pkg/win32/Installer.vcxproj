@@ -59,10 +59,6 @@
     <None Include="upgrade.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\pgadmin\pgAdmin3.vcxproj">
-      <Project>{5c2d73ba-1f24-48f8-8233-85f5d672aa6a}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
