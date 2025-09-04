@@ -21,6 +21,9 @@
             Languages="1033" 
             Compressed="yes" 
             SummaryCodepage="1252" />
+
+<!-- Icons -->
+        <Icon Id="pgAdmin" SourceFile="$(var.BUILDTREE)/pgadmin/include/images/pgAdmin3.ico" />
         
 <!-- Directories -->
 
@@ -60,7 +63,6 @@
                                 <Icon Id="pgadmin3.ico" SourceFile="$(var.BUILDTREE)/pgadmin/include/images/pgAdmin3.ico" />
 <?endif?>
                             </Shortcut>
-                            <Icon Id="pgAdmin" SourceFile="$(var.BUILDTREE)/pgadmin/include/images/pgAdmin3.ico" />
                             <ProgId Id="pgAdmin.1" Icon="pgAdmin" IconIndex="1">
                                 <Extension ContentType="text/plain" Id="sql">
                                     <Verb Id="open" Command="Open" TargetFile="pgadmin_exes.pgadmin3.exe" Argument='-q -f "%1"' />
