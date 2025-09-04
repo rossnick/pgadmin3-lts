@@ -107,17 +107,19 @@ jobs:
       # Build the main application and its dependencies (including png2c) together
       run: msbuild /p:Configuration=${{matrix.build_conf}} /p:Platform=Win32 /v:minimal pgadmin/pgAdmin3.vcxproj
 
-    - name: Build Documentation
+    - name: Debug WiX Files
       if: ${{ matrix.build_conf == 'Release' }}
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Build the documentation first as it's needed by the installer
-      run: msbuild /p:Configuration=All /p:Platform=Win32 docs/Docs.vcxproj
-
-    - name: Build Installer
-      if: ${{ matrix.build_conf == 'Release' }}
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Build the installer after the main application and docs are ready
-      run: msbuild /p:Configuration=All /p:Platform=Win32 pkg/win32/Installer.vcxproj
+      # Let's see what WiX files are being processed
+      run: |
+        echo "Checking WiX files..."
+        type pkg\win32\src\pgadmin3.wxs | findstr /i "pgAdmin"
+        echo "---"
+        dir pkg\win32\src\*.wxs
+        echo "---"
+        echo "Trying candle directly..."
+        cd pkg\win32
+        "%WIX%\bin\candle" -nologo -dLIBSSH2DIR="%LIBSSH2DIR%" -dWXDIR="%WXWIN%" -dPLATFORM_TOOLSET_VERSION=142 -dVC_TOOLS_REDIST_INSTALL_DIR="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.29.30133\" -dPGDIR="%PGDIR%" -dBUILDTREE="../.." -dBRANDED=0 -dBRANDINGDIR="../../branding" -dAPPVENDOR="The pgAdmin Development Team" -dAPPNAME="pgAdmin III" -dAPPKEYWORDS="PostgreSQL, pgAdmin" -dAPPCOMMENTS="PostgreSQL Tools" -dAPPDESCRIPTION="Management and administration tools for the PostgreSQL DBMS" -dAPPVERSION="1.23" -dSYSTEM32DIR="%SystemRoot%\System32" -dPFILESDIR="%ProgramFiles%" src/pgadmin3.wxs
 
     - name: Upload pgAdmin3.exe
       if: ${{ matrix.build_conf == 'Release' }}
