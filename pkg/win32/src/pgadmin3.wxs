@@ -22,9 +22,6 @@
             Compressed="yes" 
             SummaryCodepage="1252" />
 
-<!-- Icons -->
-        <Icon Id="pgAdmin" SourceFile="$(var.BUILDTREE)/pgadmin/include/images/pgAdmin3.ico" />
-        
 <!-- Directories -->
 
         <Directory Id="TARGETDIR" Name="SourceDir">
@@ -63,11 +60,6 @@
                                 <Icon Id="pgadmin3.ico" SourceFile="$(var.BUILDTREE)/pgadmin/include/images/pgAdmin3.ico" />
 <?endif?>
                             </Shortcut>
-                            <ProgId Id="pgAdmin.1" Icon="pgAdmin" IconIndex="1">
-                                <Extension ContentType="text/plain" Id="sql">
-                                    <Verb Id="open" Command="Open" TargetFile="pgadmin_exes.pgadmin3.exe" Argument='-q -f "%1"' />
-                                </Extension>
-                            </ProgId>
                         </Component>
                        
                         <Component Id="inis" Guid="{0287875A-F802-4327-9F3A-8A30D1316742}">
