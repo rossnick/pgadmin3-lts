@@ -17,7 +17,7 @@ jobs:
         build_conf: [Release, Debug]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -46,7 +46,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       shell: pwsh
       run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.1/wxWidgets-3.3.1-headers.7z" -OutFile wxWidgets-headers.7z
+        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5-headers.7z" -OutFile wxWidgets-headers.7z
         7z.exe x -aoa wxWidgets-headers.7z -o${{env.WXWIN}}
 
     - name: Download and unpack wxWidgets source
@@ -108,3 +108,19 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       # Build only the pgAdmin3 project, skip the Installer which requires VC++ merge modules
       run: msbuild /m /p:Configuration=${{matrix.build_conf}} /t:pgAdmin3 ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Upload pgAdmin3.exe
+      if: ${{ matrix.build_conf == 'Release' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: pgAdmin3-${{matrix.build_conf}}
+        path: |
+          pgadmin/Release/pgAdmin3.exe
+          pgadmin/Release/*.dll
+
+    - name: Upload Installer
+      if: ${{ matrix.build_conf == 'Release' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: pgAdmin3-Installer-${{matrix.build_conf}}
+        path: pkg/win32/pgadmin3.msi
