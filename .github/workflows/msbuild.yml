@@ -106,4 +106,5 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{matrix.build_conf}} ${{env.SOLUTION_FILE_PATH}}
+      # Build only the pgAdmin3 project, skip the Installer which requires VC++ merge modules
+      run: msbuild /m /p:Configuration=${{matrix.build_conf}} /t:pgAdmin3 ${{env.SOLUTION_FILE_PATH}}
