@@ -61,7 +61,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       shell: pwsh
       run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc14x_x64_Dev.7z" -OutFile wxWidgets-devel.7z
+        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_Dev.7z" -OutFile wxWidgets-devel.7z
         7z.exe x -aoa wxWidgets-devel.7z -o${{env.WXWIN}}
 
     - name: Download and unpack wxWidgets release libraries
@@ -69,7 +69,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       shell: pwsh
       run: |
-        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc14x_x64_ReleaseDLL.7z" -OutFile wxWidgets-libraries.7z
+        Invoke-WebRequest -Uri "https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-0.5_vc142_ReleaseDLL.7z" -OutFile wxWidgets-libraries.7z
         7z.exe x -aoa wxWidgets-libraries.7z -o${{env.WXWIN}}
 
     - name: Download and unpack PostgreSQL
